@@ -93,6 +93,11 @@ async function guardar() {
     return;
   }
 
+  // Guardar en el navegador para no tener que volver a cargar
+  localStorage.setItem('scriptUrl', url);
+  localStorage.setItem('apiKey', apiKey);
+  localStorage.setItem('instructivo', instructivo);
+
   const btn = document.getElementById('btn-guardar');
   btn.disabled = true;
   mostrarStatus('Guardando configuración...', 'loading');
@@ -123,13 +128,14 @@ function mostrarStatus(msg, tipo) {
   el.style.display = 'block';
 }
 
-// Cargar URL guardada localmente para comodidad
+// Cargar datos guardados al abrir la página
 window.onload = () => {
   const url = localStorage.getItem('scriptUrl');
+  const apiKey = localStorage.getItem('apiKey');
+  const instructivo = localStorage.getItem('instructivo');
   if (url) document.getElementById('script-url').value = url;
-  document.getElementById('script-url').addEventListener('input', e => {
-    localStorage.setItem('scriptUrl', e.target.value);
-  });
+  if (apiKey) document.getElementById('api-key').value = apiKey;
+  if (instructivo) document.getElementById('instructivo').value = instructivo;
 };
 </script>
 </body>
